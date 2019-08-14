@@ -12,8 +12,8 @@ I ran with the "Join a Team" idea, which allows **users** (model 1) to **signup*
 
 ```
 class Signup < ApplicationRecord
-  belongs_to :team
-  belongs_to :user
+    belongs_to :team
+		belongs_to :user
 end
 
 ###
@@ -31,7 +31,7 @@ class User < ApplicationRecord
 end
 ```
 
-The challenge, however, came when trying to incorporate games into the picture. The unique situation for games, which I had not encountered before, was that games "have many" teams, but more specifically games always and only ever have 2 teams. Teams "have many" games. Instead of creating a join table for these two models, it actually made more sense to have 2 columns in the games table corresponding to: home_team_id and away_team_id. From there, the question was how to use ActiveRecord properly to ensure that we could connect a home_team_id and an away_team_id to the teams table despite the nonconventional column names. 
+The challenge, however, came when trying to incorporate games into the picture. The unique situation for games, which I had not encountered before, was that games "have many" teams, but more specifically games only ever have *2 teams*. Teams "have many" games. Instead of creating a join table for these two models, it actually made more sense to have 2 columns in the games table corresponding to: home_team_id and away_team_id. From there, the question was how to use ActiveRecord properly to ensure that we could connect a home_team_id and an away_team_id to the teams table despite the nonconventional column names. 
 
 The solution was to include foreign_keys pointing to the teams table in the migration as seen below. 
 
@@ -50,7 +50,7 @@ class CreateGames < ActiveRecord::Migration[5.2]
 end
 ```
 
-As far as the existing models went, I added the simple "has_many :games" line to the team model and added the "belongs_to" assocations below to the game model.
+As far as the existing models went, I added the familiar "has_many :games" line to the team model and added the "belongs_to" assocations to the game model seen below.
 
 ```
 class Game < ApplicationRecord
@@ -59,7 +59,7 @@ class Game < ApplicationRecord
 end
 ```
 
-With the associations properly setup with ActiveRecord, I was able to simple pull the home & away team names in my views as needed. 
+With the associations properly setup with ActiveRecord, I was able to simply pull the home & away team names in my views as needed. 
 
 ```
 <%=@game.home_team.name %> (Home) vs. <%= @game.away_team.name %></span>
