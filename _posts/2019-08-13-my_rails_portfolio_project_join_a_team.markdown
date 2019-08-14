@@ -13,7 +13,7 @@ I ran with the "Join a Team" idea, which allows **users** (model 1) to **signup*
 ```
 class Signup < ApplicationRecord
     belongs_to :team
-		belongs_to :user
+    belongs_to :user
 end
 
 ###
