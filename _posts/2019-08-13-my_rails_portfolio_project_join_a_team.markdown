@@ -15,17 +15,20 @@ class Signup < ApplicationRecord
   belongs_to :team
   belongs_to :user
 end
+
 ###
+
 class Team < ApplicationRecord
     has_many :signups
     has_many :users, through: :signups
 end
+
 ###
+
 class User < ApplicationRecord
     has_many :signups
     has_many :teams, through: :signups
 end
-
 ```
 
 The challenge, however, came when trying to incorporate games into the picture. The unique situation for games, which I had not encountered before, was that games "have many" teams, but more specifically games always and only ever have 2 teams. Teams "have many" games. Instead of creating a join table for these two models, it actually made more sense to have 2 columns in the games table corresponding to: home_team_id and away_team_id. From there, the question was how to use ActiveRecord properly to ensure that we could connect a home_team_id and an away_team_id to the teams table despite the nonconventional column names. 
@@ -42,12 +45,9 @@ class CreateGames < ActiveRecord::Migration[5.2]
       t.datetime :date
       t.integer :home_team_id, foreign_key: { to_table: :teams}
       t.integer :away_team_id, foreign_key: { to_table: :teams}
-
-      t.timestamps
     end
   end
 end
-
 ```
 
 As far as the existing models went, I added the simple "has_many :games" line to the team model and added the "belongs_to" assocations below to the game model.
