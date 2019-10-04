@@ -100,7 +100,4 @@ function putGiftsOnDom(giftArray){
         giftCollection.innerHTML += new Gift(gift).render()
     })
 }
-
-
-
 ```
