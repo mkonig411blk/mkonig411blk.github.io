@@ -98,14 +98,6 @@ function putGiftsOnDom(giftArray){
                                 <h4 class="favorites-link">View My Favorites ♡</h4>`
     giftArray.forEach(gift => {
         giftCollection.innerHTML += new Gift(gift).render()
-
-        // `<div class="card">
-        //   <h2>${gift.title} ($${gift.price})</h2>
-        //   <h4 class="gift-cat">${gift.category}</h4>
-        //   <a href=${gift.link} target="_blank"><img src=${gift.image} class="gift-image" /></a>
-        //   <p>${gift.description}<p>
-        //   <button data-gift-id=${gift.id} class="like-btn">♡</button>
-        // </div>`
     })
 }
 
