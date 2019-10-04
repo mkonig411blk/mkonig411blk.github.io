@@ -67,3 +67,48 @@ function putGiftsOnDom(giftArray){
     })
 }
 ```
+
+With the help of Flatiron's technical coaches, we identified the opportunity to refactor the putGiftsOnDom function and move towards more object oriented JavaScript. You'll see below that I took the following steps to move logic out of the putGiftsOnDom function and into a Gift class: create a Gift class, create a constructor for the Gift class assigning each attribute, render a Gift "card" for each Gift instance to display in the frontend. From there, I updated the putGiftsOnDom function to iterate through the giftArray and create a new instance of each Gift, and thus a new Gift "card"/div, to the giftCollection element.
+
+```
+class Gift {
+    constructor(giftAttributes) {
+        this.title = giftAttributes.title;
+        this.price = giftAttributes.price;
+        this.category = giftAttributes.category;
+        this.description = giftAttributes.description;
+        this.link = giftAttributes.link;
+        this.image = giftAttributes.image;
+        this.id = giftAttributes.id;
+    }
+
+    render() {
+        return `<div class="card">
+                  <h2>${this.title} ($${this.price})</h2>
+                  <h4 class="gift-cat">${this.category}</h4>
+                  <a href=${this.link} target="_blank"><img src=${this.image} class="gift-image" /></a>
+                  <p>${this.description}<p>
+                  <button data-gift-id=${this.id} class="like-btn">♡</button>
+                </div>`
+    }
+}
+
+function putGiftsOnDom(giftArray){
+    giftCollection.innerHTML = `<h2 class="subheader">All Gift Ideas</h2>
+                                <h4 class="favorites-link">View My Favorites ♡</h4>`
+    giftArray.forEach(gift => {
+        giftCollection.innerHTML += new Gift(gift).render()
+
+        // `<div class="card">
+        //   <h2>${gift.title} ($${gift.price})</h2>
+        //   <h4 class="gift-cat">${gift.category}</h4>
+        //   <a href=${gift.link} target="_blank"><img src=${gift.image} class="gift-image" /></a>
+        //   <p>${gift.description}<p>
+        //   <button data-gift-id=${gift.id} class="like-btn">♡</button>
+        // </div>`
+    })
+}
+
+
+
+```
